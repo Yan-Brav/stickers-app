@@ -1,7 +1,7 @@
 import React from 'react';
 import './StickerItem.css'
 
-function StickerItem({sticker, onChange, onDelete, onSave}) {
+function StickerItem({sticker, onChange, onDelete, onSave, onResize}) {
     let startPosition = {
         x: 0,
         y: 0
@@ -11,8 +11,8 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
         position: 'absolute',
         border: 'solid red 1px',
         backgroundColor: 'antiquewhite',
-        width: '200px',
-        height: '200px',
+        width: 'auto',
+        height: 'auto',
         top: sticker.y,
         left: sticker.x
     };
@@ -21,6 +21,18 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
         onChange({
             ...sticker,
             [event.target.name]: event.target.value
+        })
+    }
+
+    function resize() {
+        document.addEventListener('resize', getNewSize)
+    }
+
+    function getNewSize(event) {
+        onResize({
+            ...sticker,
+            width: event.target.width,
+            height: event.target.height
         })
     }
 
@@ -47,11 +59,19 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
         document.removeEventListener('mouseup', stopMove);
     }
 
+
+
     return (
         <div className='sticker'
-                style={styles}>
+                style={styles}
+                onResize={resize}
+             >
             <div className='head'>
-                <span id='drag' onMouseDown={drag}>O</span>
+                <span id='drag'
+                      onMouseDown={drag}
+                      onMouseUp={() => onSave(sticker)}>
+                    O
+                </span>
                 <span id='delete' onClick={() => onDelete(sticker)}>X</span>
             </div>
             <div className='description'>
@@ -59,10 +79,8 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
                     name='description'
                     value={sticker.description}
                     onChange={onChangeValue}
+                    onBlur={() => onSave(sticker)}
                     />
-            </div>
-            <div>
-                <button className='save' onClick={() => onSave(sticker)}>Save</button>
             </div>
         </div>
     );
