@@ -24,7 +24,7 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
         })
     }
 
-    function startDrag(event) {
+    function drag(event) {
         startPosition = {
             x: event.clientX,
             y: event.clientY
@@ -51,7 +51,7 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
         <div className='sticker'
                 style={styles}>
             <div className='head'>
-                <span id='drag' onMouseDown={startDrag}>O</span>
+                <span id='drag' onMouseDown={drag}>O</span>
                 <span id='delete' onClick={() => onDelete(sticker)}>X</span>
             </div>
             <div className='description'>
