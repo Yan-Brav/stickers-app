@@ -46,12 +46,6 @@ function App() {
                     ? sticker : item));
   }
 
-  function resize(sticker) {
-          setStickers(stickers.map((item) => item.id === sticker.id
-                        ? sticker : item));
-          // editSticker(sticker);
-  }
-
   function deleteSticker(sticker) {
       deleteStickerFromServer(sticker);
       setStickers(
@@ -71,8 +65,7 @@ function App() {
           stickers={stickers}
           onChange={updateSticker}
           onDelete={deleteSticker}
-          onSave={saveSticker}
-          onResize={resize}/>
+          onSave={saveSticker} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import StickerItem from "../StickerItem/StickerItem";
 import './StickersList.css'
 
-function StickersList({stickers, onDelete, onChange, onSave, onResize}) {
+function StickersList({stickers, onDelete, onChange, onSave}) {
     return (
         <div className='stickers-list'>
             {stickers.map(item => {
@@ -11,8 +11,7 @@ function StickersList({stickers, onDelete, onChange, onSave, onResize}) {
                     sticker={item}
                     onDelete={onDelete}
                     onChange={onChange}
-                    onSave={onSave}
-                    onResize={onResize}/>
+                    onSave={onSave} />
             })}
         </div>
     );

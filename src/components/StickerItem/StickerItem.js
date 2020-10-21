@@ -1,38 +1,27 @@
 import React from 'react';
 import './StickerItem.css'
 
-function StickerItem({sticker, onChange, onDelete, onSave, onResize}) {
+function StickerItem({sticker, onChange, onDelete, onSave}) {
     let startPosition = {
         x: 0,
         y: 0
     };
 
-    const styles = {
+    let styles = {
         position: 'absolute',
         border: 'solid red 1px',
         backgroundColor: 'antiquewhite',
         width: 'auto',
         height: 'auto',
         top: sticker.y,
-        left: sticker.x
+        left: sticker.x,
+        resize: 'both'
     };
 
     function onChangeValue(event) {
         onChange({
             ...sticker,
             [event.target.name]: event.target.value
-        })
-    }
-
-    function resize() {
-        document.addEventListener('resize', getNewSize)
-    }
-
-    function getNewSize(event) {
-        onResize({
-            ...sticker,
-            width: event.target.width,
-            height: event.target.height
         })
     }
 
@@ -59,13 +48,9 @@ function StickerItem({sticker, onChange, onDelete, onSave, onResize}) {
         document.removeEventListener('mouseup', stopMove);
     }
 
-
-
     return (
         <div className='sticker'
-                style={styles}
-                onResize={resize}
-             >
+                style={styles}>
             <div className='head'>
                 <span id='drag'
                       onMouseDown={drag}
