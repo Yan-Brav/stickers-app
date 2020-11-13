@@ -3,6 +3,7 @@ import Header from "./components/Header/Header";
 import StickersList from "./components/StickersList/StickersList";
 import stickersService from './stickers-service'
 import './App.css';
+import StickerForm from "./components/StickerForm/StickerForm";
 
 function createNewSticker() {
     return {
@@ -66,6 +67,7 @@ function App() {
           onChange={updateSticker}
           onDelete={deleteSticker}
           onSave={saveSticker} />
+      <StickerForm/>
     </div>
   );
 }
