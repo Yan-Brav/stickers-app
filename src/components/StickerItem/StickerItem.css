@@ -1,5 +1,6 @@
 .head {
     padding: 5px;
+    display: flex;
 }
 
 .description {
@@ -8,12 +9,24 @@
 
 #drag {
     cursor: move;
-    float: left;
+    width: 15%;
+    /*float: left;*/
+}
+
+#edit {
+    cursor: pointer;
+    width: 15%;
+}
+
+#empty {
+    cursor: pointer;
+    width: 55%;
 }
 
 #delete {
     cursor: pointer;
-    float: right;
+    width: 15%;
+    /*float: right;*/
 
 }
 

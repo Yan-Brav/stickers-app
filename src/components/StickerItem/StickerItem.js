@@ -55,9 +55,11 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
                 <span id='drag'
                       onMouseDown={drag}
                       onMouseUp={() => onSave(sticker)}>
-                    O
+                    <i className="fa fa-arrows"/>
                 </span>
-                <span id='delete' onClick={() => onDelete(sticker)}>X</span>
+                <span id='empty'> </span>
+                <span id='edit'><i className='fa fa-pencil'/></span>
+                <span id='delete' onClick={() => onDelete(sticker)}><i className='fa fa-trash-o'/></span>
             </div>
             <div className='description'>
                 <textarea
