@@ -1,20 +1,22 @@
 import React from 'react';
 import StickerItem from "../StickerItem/StickerItem";
 import './StickersList.css'
+// import {setStickers} from "../../store/actions/stickers";
+import {connect} from "react-redux";
 
-function StickersList({stickers, onDelete, onChange, onSave}) {
+function StickersList({stickersList}) {
+
     return (
         <div className='stickers-list'>
-            {stickers.map(item => {
+            {stickersList.map(item => {
                 return <StickerItem
                     key={item.id}
-                    sticker={item}
-                    onDelete={onDelete}
-                    onChange={onChange}
-                    onSave={onSave} />
+                    sticker={item} />
             })}
         </div>
     );
 }
 
-export default StickersList;
+const mapStateToProps = ({stickersList}) => ({stickersList});
+
+export default connect(mapStateToProps)(StickersList);

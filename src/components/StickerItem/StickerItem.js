@@ -1,7 +1,11 @@
 import React from 'react';
 import './StickerItem.css'
+import {connect} from "react-redux";
+import {changeSticker, deleteSticker, saveSticker} from "../../store/actions/stickers";
+import {BrowserRouter as Router, NavLink, Route, Switch} from "react-router-dom";
+import StickerForm from "../StickerForm/StickerForm";
 
-function StickerItem({sticker, onChange, onDelete, onSave}) {
+function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
     let startPosition = {
         x: 0,
         y: 0
@@ -11,19 +15,13 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
         position: 'absolute',
         border: 'solid red 1px',
         backgroundColor: 'antiquewhite',
-        width: 'auto',
-        height: 'auto',
+        width: 150,
+        height: 150,
         top: sticker.y,
         left: sticker.x,
         resize: 'both'
     };
 
-    function onChangeValue(event) {
-        onChange({
-            ...sticker,
-            [event.target.name]: event.target.value
-        })
-    }
 
     function drag(event) {
         startPosition = {
@@ -36,16 +34,21 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
 
     function startMove(event) {
         const {x, y} = sticker;
-        onChange({
+        changeSticker({
             ...sticker,
             x: x + (event.clientX - startPosition.x),
             y: y + (event.clientY - startPosition.y)
-        })
+        });
     }
 
     function stopMove() {
         document.removeEventListener('mousemove', startMove);
         document.removeEventListener('mouseup', stopMove);
+
+    }
+
+    function onSave() {
+        saveSticker(sticker);
     }
 
     return (
@@ -54,23 +57,41 @@ function StickerItem({sticker, onChange, onDelete, onSave}) {
             <div className='head'>
                 <span id='drag'
                       onMouseDown={drag}
-                      onMouseUp={() => onSave(sticker)}>
-                    <i className="fa fa-arrows"/>
+                      /*onMouseUp={() => onSave(sticker)}*/>
+                    <i className="fa fa-arrows"
+                       onMouseUp={() => onSave(sticker)}/>
                 </span>
                 <span id='empty'> </span>
-                <span id='edit'><i className='fa fa-pencil'/></span>
-                <span id='delete' onClick={() => onDelete(sticker)}><i className='fa fa-trash-o'/></span>
+                <Router>
+                    <NavLink to={`/add/${sticker.id}`}>
+                        <span id='edit'>
+                            <i className='fa fa-pencil'/>
+                        </span>
+                    </NavLink>
+                    <Switch>
+                        <Route path={`/add/${sticker.id}`}>
+                            <StickerForm/>
+                        </Route>
+                    </Switch>
+                </Router>
+
+                <span id='delete'
+                      onClick={() => deleteSticker(sticker.id)}>
+                    <i className='fa fa-trash-o'/>
+                </span>
             </div>
             <div className='description'>
-                <textarea
-                    name='description'
-                    value={sticker.description}
-                    onChange={onChangeValue}
-                    onBlur={() => onSave(sticker)}
-                    />
+                <p>{sticker.description}</p>
             </div>
         </div>
     );
 }
 
-export default StickerItem;
+
+const mapDispatchToProps = {
+    deleteSticker,
+    saveSticker,
+    changeSticker
+};
+
+export default connect(null, mapDispatchToProps)(StickerItem);

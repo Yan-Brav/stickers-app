@@ -1,75 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import Header from "./components/Header/Header";
-import StickersList from "./components/StickersList/StickersList";
-import stickersService from './stickers-service'
+import React, {useEffect} from 'react';
+import Header from './components/Header/Header';
+import StickersList from './components/StickersList/StickersList';
 import './App.css';
-import StickerForm from "./components/StickerForm/StickerForm";
+import {setStickers} from './store/actions/stickers';
+import {connect} from 'react-redux';
 
-function createNewSticker() {
-    return {
-        description: '',
-        width: 200,
-        height: 200,
-        x: 5,
-        y: 5
-    };
-}
-
-function App() {
-  const [stickers, setStickers] = useState([]);
-
-  useEffect(() => {
-    console.log('stickers are loaded');
-    stickersService.get('/')
-        .then(({data}) => {setStickers(data)});
-  }, []);
-
-  function addNewSticker() {
-      console.log('The new sticker is added');
-      stickersService.post('/', createNewSticker())
-          .then(({data}) => setStickers([...stickers, data]))
-  }
-
-  function editSticker(sticker) {
-      stickersService.put('/' + sticker.id, sticker)
-          .then(() => console.log('sticker is updated'))
-          .catch((er) => console.log(er))
-  }
-
-  function deleteStickerFromServer(sticker) {
-      stickersService.delete('/' + sticker.id)
-          .then(() => console.log('sticker is deleted'))
-          .catch((er) => console.log(er))
-  }
-
-  function updateSticker(sticker) {
-      setStickers(stickers.map((item) => item.id === sticker.id
-                    ? sticker : item));
-  }
-
-  function deleteSticker(sticker) {
-      deleteStickerFromServer(sticker);
-      setStickers(
-          stickers.filter((item) => item !== sticker)
-      )
-  }
-
-  function saveSticker(sticker) {
-      editSticker(sticker);
-
-  }
+function App({setStickers}) {
+    useEffect(() => {
+        console.log('Get and set stickers');
+        setStickers();
+    }, [setStickers]);
 
   return (
-    <div className="App">
-      <Header onAddBtnClick={addNewSticker}/>
-      <StickersList
-          stickers={stickers}
-          onChange={updateSticker}
-          onDelete={deleteSticker}
-          onSave={saveSticker} />
-      <StickerForm/>
+    <div className='App'>
+      <Header />
+      <StickersList />
     </div>
   );
 }
 
-export default App;
+const mapDispatchToProps = {
+    setStickers
+};
+
+export default connect(null, mapDispatchToProps)(App);

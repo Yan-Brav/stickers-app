@@ -6,8 +6,6 @@
     border: solid black 2px;
     background-color: black;
     color: white;
-    /*height: 36px;*/
-    /*flex-direction: row;*/
 }
 .add {
     border: solid grey 1px;
@@ -16,10 +14,10 @@
     height: 30px;
     margin: 5px;
     cursor: pointer;
+    color: black;
 }
 h2 {
     flex-grow: 1;
     margin: 5px;
-    /*width: 300px;*/
 }
 

@@ -1,15 +1,22 @@
 import React from 'react';
 import {Formik} from "formik";
+import {useHistory} from "react-router-dom";
 import './StickerForm.css'
+import {connect} from "react-redux";
+import {addSticker} from "../../store/actions/stickers";
 
-function StickerForm(props) {
+function StickerForm({stickersList, addSticker}) {
+
+    let history = useHistory();
+
+    const goBack = () => history.push('/');
 
     const onFormSubmit = (values) => {
-        console.log(values);
+        addSticker(values);
+        goBack();
     };
 
     const renderForm = (props) => {
-        console.log(props);
         return (
             <form onSubmit={props.handleSubmit}>
                 <h3>Sticker Form</h3>
@@ -26,12 +33,11 @@ function StickerForm(props) {
                     <input type='textarea'
                            name='description'
                            onChange={props.handleChange}
-                           onBlur={props.handleBlur}
                            value={props.values.description}/>
                 </div>
                 <div id='btn-group'>
                     <button type='submit'>Save</button>
-                    <button type='button'>Cancel</button>
+                    <button type='button' onClick={goBack}>Cancel</button>
                 </div>
             </form>
         )
@@ -40,7 +46,12 @@ function StickerForm(props) {
         <div className='modal'>
             <div className='sticker-form'>
                 <Formik
-                    initialValues={{title: '', description: ''}}
+                    initialValues={{title: '',
+                        description: '',
+                        width:200,
+                        height: 200,
+                        x: 0,
+                        y: 0}}
                     onSubmit={onFormSubmit}>
                     {
                         renderForm
@@ -51,4 +62,14 @@ function StickerForm(props) {
     );
 }
 
-export default StickerForm;
+const mapStateToProps = ({stickersList}, props) => {
+    return {
+        stickersList
+    }
+};
+
+const mapDispatchToProps = {
+    addSticker
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StickerForm);
