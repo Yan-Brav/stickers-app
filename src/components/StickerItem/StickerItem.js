@@ -1,9 +1,9 @@
 import React from 'react';
 import './StickerItem.css'
-import {connect} from "react-redux";
-import {changeSticker, deleteSticker, saveSticker} from "../../store/actions/stickers";
-import {BrowserRouter as Router, NavLink, Route, Switch} from "react-router-dom";
-import StickerForm from "../StickerForm/StickerForm";
+import {connect} from 'react-redux';
+import {changeSticker, deleteSticker, saveSticker} from '../../store/actions/stickers';
+import {BrowserRouter as Router, NavLink, Route, Switch} from 'react-router-dom';
+import StickerForm from '../StickerForm/StickerForm';
 
 function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
     let startPosition = {
@@ -47,19 +47,14 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
 
     }
 
-    function onSave() {
-        saveSticker(sticker);
-    }
-
     return (
         <div className='sticker'
                 style={styles}>
             <div className='head'>
                 <span id='drag'
                       onMouseDown={drag}
-                      /*onMouseUp={() => onSave(sticker)}*/>
-                    <i className="fa fa-arrows"
-                       onMouseUp={() => onSave(sticker)}/>
+                      onMouseUp={() => saveSticker(sticker)}>
+                    <i className="fa fa-arrows"/>
                 </span>
                 <span id='empty'> </span>
                 <Router>
@@ -69,7 +64,7 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
                         </span>
                     </NavLink>
                     <Switch>
-                        <Route path={`/add/${sticker.id}`}>
+                        <Route path={`/add/:id`}>
                             <StickerForm/>
                         </Route>
                     </Switch>
@@ -79,6 +74,9 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
                       onClick={() => deleteSticker(sticker.id)}>
                     <i className='fa fa-trash-o'/>
                 </span>
+            </div>
+            <div className='description'>
+                <p>{sticker.title}</p>
             </div>
             <div className='description'>
                 <p>{sticker.description}</p>

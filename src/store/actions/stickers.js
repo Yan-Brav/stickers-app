@@ -18,34 +18,22 @@ export const deleteSticker = (id) => async (dispatch) => {
     })
 };
 
+export const saveSticker = (sticker) => (dispatch) => {
+    sticker.id ? updateSticker(sticker, dispatch) : addSticker(sticker, dispatch);
+};
+
 export const ADD_NEW_STICKER = 'ADD_NEW_STICKER';
 export const addSticker = (sticker, dispatch) => {
-    api.post(`/`, sticker).then(({data}) => dispatch({type: ADD_NEW_STICKER, payload: data}))
+    api.post('/', sticker)
+        .then(({data}) => dispatch({type: ADD_NEW_STICKER, payload: data}))
 };
-/*export const addSticker = (sticker) => async (dispatch) => {
-    const {data} = await api.post('/', sticker);
-    dispatch({
-        type: ADD_NEW_STICKER,
-        payload: data
-    })
-};*/
 
 export const  UPDATE_STICKER = 'UPDATE_STICKER';
 export const updateSticker = (sticker, dispatch) => {
     api.put(`/${sticker.id}`, sticker)
         .then(({data}) => dispatch({type: UPDATE_STICKER, payload: data}))
 };
-/*export const updateSticker = (sticker) => async (dispatch) => {
-    const {data} = await api.put('/' + sticker.id, sticker);
-    dispatch({
-        type: UPDATE_STICKER,
-        payload: data
-    })
-};*/
 
-export const saveSticker = (sticker) => (dispatch) => {
-    sticker.id ? updateSticker(sticker, dispatch) : addSticker(sticker, dispatch);
-};
 
 export const  CHANGE_STICKER = 'CHANGE_STICKER';
 export const changeSticker = (sticker) => {
@@ -53,6 +41,6 @@ export const changeSticker = (sticker) => {
         type: CHANGE_STICKER,
         payload: sticker
     }
-}
+};
 
 

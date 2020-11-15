@@ -10,7 +10,6 @@
 #drag {
     cursor: move;
     width: 15%;
-    /*float: left;*/
 }
 
 #edit {
@@ -26,7 +25,6 @@
 #delete {
     cursor: pointer;
     width: 15%;
-    /*float: right;*/
 
 }
 

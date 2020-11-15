@@ -1,8 +1,7 @@
 import React from 'react';
-import StickerItem from "../StickerItem/StickerItem";
+import StickerItem from '../StickerItem/StickerItem';
 import './StickersList.css'
-// import {setStickers} from "../../store/actions/stickers";
-import {connect} from "react-redux";
+import {connect} from 'react-redux';
 
 function StickersList({stickersList}) {
 
