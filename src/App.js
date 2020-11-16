@@ -7,7 +7,6 @@ import {connect} from 'react-redux';
 
 function App({setStickers}) {
     useEffect(() => {
-        console.log('Get and set stickers');
         setStickers();
     }, [setStickers]);
 

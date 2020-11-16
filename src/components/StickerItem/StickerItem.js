@@ -16,7 +16,7 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
         border: 'solid red 1px',
         backgroundColor: 'antiquewhite',
         width: '150px',
-        height: '50%',
+        height: '150px',
         top: sticker.y,
         left: sticker.x,
         resize: 'both'

@@ -26,33 +26,54 @@ function StickerForm({currentSticker, saveSticker}) {
     };
 
     const renderForm = (props) => {
+        console.log(props);
         return (
             <Form>
                 <div id='title' className='form-field'>
-                    <label htmlFor='title'>Title</label>
+                    <label htmlFor='title'>Title: </label>
                     <Field name='title'/>
                 </div>
+                {props.errors.title && props.touched.title
+                    ? <div className='errors'>{props.errors.title}</div>
+                    : null}
+
                 <div id='description' className='form-field'>
-                    <label htmlFor='description'>Description</label>
+                    <label htmlFor='description'>Description: </label>
                     <Field className='form-description'
                            name='description'
-                           maxlength='255'
                            as='textarea'/>
                 </div>
+                {props.errors.description && props.touched.description
+                    ? <div className='errors'>{props.errors.description}</div>
+                    : null}
                 <div id='btn-group'>
-                    <button type='submit'>Save</button>
+                    <button type='submit ' disabled={!props.isValid}>Save</button>
                     <button type='button' onClick={goBack}>Cancel</button>
                 </div>
             </Form>
         )
     };
+
+    const validateForm = (values) => {
+        const errors = {};
+        if (!values.title)  {
+            errors.title = 'Title is required';
+        }
+        if (values.description.length > 30) {
+            errors.description = 'Description can not be more than 255'
+        }
+        return errors;
+    };
+
     return (
-        <div className='modal'>
+        <div className='modal'
+             /*onClick={goBack}*/>
             <div className='sticker-form'>
                 <h3>Sticker Form</h3>
                 <Formik
                     initialValues={currentSticker}
-                    onSubmit={onFormSubmit}>
+                    onSubmit={onFormSubmit}
+                    validate={validateForm}>
                     {renderForm}
                 </Formik>
             </div>
