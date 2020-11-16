@@ -4,7 +4,8 @@
 }
 
 .description {
-    padding: 5px;
+    /*padding: 5px;*/
+    word-break: break-all;
 }
 
 #drag {

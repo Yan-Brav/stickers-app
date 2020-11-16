@@ -15,8 +15,8 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
         position: 'absolute',
         border: 'solid red 1px',
         backgroundColor: 'antiquewhite',
-        width: 150,
-        height: 150,
+        width: '150px',
+        height: '50%',
         top: sticker.y,
         left: sticker.x,
         resize: 'both'
@@ -75,7 +75,7 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
                     <i className='fa fa-trash-o'/>
                 </span>
             </div>
-            <div className='description'>
+            <div className='title'>
                 <p>{sticker.title}</p>
             </div>
             <div className='description'>

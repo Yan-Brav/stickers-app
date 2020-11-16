@@ -26,7 +26,6 @@ function StickerForm({currentSticker, saveSticker}) {
     };
 
     const renderForm = (props) => {
-        console.log(props);
         return (
             <Form>
                 <div id='title' className='form-field'>
@@ -35,7 +34,10 @@ function StickerForm({currentSticker, saveSticker}) {
                 </div>
                 <div id='description' className='form-field'>
                     <label htmlFor='description'>Description</label>
-                    <Field className='form-description' name='description' as='textarea'/>
+                    <Field className='form-description'
+                           name='description'
+                           maxlength='255'
+                           as='textarea'/>
                 </div>
                 <div id='btn-group'>
                     <button type='submit'>Save</button>
