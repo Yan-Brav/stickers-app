@@ -18,11 +18,15 @@ function StickerForm({currentSticker, saveSticker}) {
 
     let history = useHistory();
 
-    const goBack = () => history.push('/');
+    const goBack = (e) => {
+        if (e.target.className === 'modal' || e.target.className === 'cancel') {
+            history.push('/')
+        }
+    };
 
     const onFormSubmit = (values) => {
         saveSticker(values);
-        goBack();
+        history.push('/')
     };
 
     const renderForm = (props) => {
@@ -36,7 +40,6 @@ function StickerForm({currentSticker, saveSticker}) {
                 {props.errors.title && props.touched.title
                     ? <div className='errors'>{props.errors.title}</div>
                     : null}
-
                 <div id='description' className='form-field'>
                     <label htmlFor='description'>Description: </label>
                     <Field className='form-description'
@@ -47,8 +50,12 @@ function StickerForm({currentSticker, saveSticker}) {
                     ? <div className='errors'>{props.errors.description}</div>
                     : null}
                 <div id='btn-group'>
-                    <button type='submit ' disabled={!props.isValid}>Save</button>
-                    <button type='button' onClick={goBack}>Cancel</button>
+                    <button type='submit'
+                            disabled={!props.isValid}
+                            className='btn-save'>Save</button>
+                    <button type='button'
+                            onClick={goBack}
+                            className='cancel'>Cancel</button>
                 </div>
             </Form>
         )
@@ -60,14 +67,14 @@ function StickerForm({currentSticker, saveSticker}) {
             errors.title = 'Title is required';
         }
         if (values.description.length > 30) {
-            errors.description = 'Description can not be more than 255'
+            errors.description = 'Description can not be more than 30'
         }
         return errors;
     };
 
     return (
         <div className='modal'
-             /*onClick={goBack}*/>
+             onClick={goBack}>
             <div className='sticker-form'>
                 <h3>Sticker Form</h3>
                 <Formik
