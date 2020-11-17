@@ -23,13 +23,13 @@ export const saveSticker = (sticker) => (dispatch) => {
 };
 
 export const ADD_NEW_STICKER = 'ADD_NEW_STICKER';
-export const addSticker = (sticker, dispatch) => {
+const addSticker = (sticker, dispatch) => {
     api.post('/', sticker)
         .then(({data}) => dispatch({type: ADD_NEW_STICKER, payload: data}))
 };
 
 export const  UPDATE_STICKER = 'UPDATE_STICKER';
-export const updateSticker = (sticker, dispatch) => {
+const updateSticker = (sticker, dispatch) => {
     api.put(`/${sticker.id}`, sticker)
         .then(({data}) => dispatch({type: UPDATE_STICKER, payload: data}))
 };
