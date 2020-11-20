@@ -2,8 +2,7 @@ import React from 'react';
 import './StickerItem.css'
 import {connect} from 'react-redux';
 import {changeSticker, deleteSticker, saveSticker} from '../../store/actions/stickers';
-import {BrowserRouter as Router, NavLink, Route, Switch} from 'react-router-dom';
-import StickerForm from '../StickerForm/StickerForm';
+import {NavLink} from 'react-router-dom';
 
 function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
     let startPosition = {
@@ -57,19 +56,12 @@ function StickerItem({sticker, deleteSticker, saveSticker, changeSticker}) {
                     <i className="fa fa-arrows"/>
                 </span>
                 <span id='empty'> </span>
-                <Router>
+
                     <NavLink to={`/add/${sticker.id}`}>
                         <span id='edit'>
                             <i className='fa fa-pencil'/>
                         </span>
                     </NavLink>
-                    <Switch>
-                        <Route path={`/add/:id`}>
-                            <StickerForm/>
-                        </Route>
-                    </Switch>
-                </Router>
-
                 <span id='delete'
                       onClick={() => deleteSticker(sticker.id)}>
                     <i className='fa fa-trash-o'/>
